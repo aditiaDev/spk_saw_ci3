@@ -10,7 +10,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/ionicons/ionicons.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/ionicons/ionicons.min.css'); ?>">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'); ?>">
   <!-- iCheck -->
@@ -83,90 +83,77 @@
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="<?php echo base_url("home")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="HOME" OR $this->uri->segment(1)==""){echo 'active';}?>">
+              <i class="nav-icon fas fa-home"></i>
               <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
+                Home
               </p>
             </a>
           </li>
-          
+          <?php
+          $data_master = array("USER", "KRITERIA", "LOKER");
+          ?>
+          <li class="nav-item <?php if(in_array(strtoupper($this->uri->segment(1)), $data_master )){echo 'menu-is-opening menu-open';}?>">
+            <a href="#" class="nav-link <?php if(in_array(strtoupper($this->uri->segment(1)), $data_master )){echo 'active';}?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Data Master
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url("user/")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="USER"){echo 'active';}?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url("kriteria/")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="KRITERIA"){echo 'active';}?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Kriteria</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url("loker/")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="LOKER"){echo 'active';}?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Loker</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url("pelamar")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="PELAMAR"){echo 'active';}?>">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Data Pelamar
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url("berkas")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="BERKAS"){echo 'active';}?>">
+              <i class="nav-icon fas fa-folder-open"></i>
+              <p>
+                Data Berkas
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url("nilai")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="NILAI"){echo 'active';}?>">
+              <i class="nav-icon fas fa-list-ul"></i>
+              <p>
+                Penilaian
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="/">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.1.0
-    </div>
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/jquery/jquery.min.js'); ?>"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/jquery-ui/jquery-ui.min.js'); ?>"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<!-- ChartJS -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/chart.js/Chart.min.js'); ?>"></script>
-<!-- Sparkline -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/sparklines/sparkline.js'); ?>"></script>
-<!-- JQVMap -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/jqvmap/jquery.vmap.min.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js'); ?>"></script>
-<!-- jQuery Knob Chart -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/jquery-knob/jquery.knob.min.js'); ?>"></script>
-<!-- daterangepicker -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/moment/moment.min.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/adminlte/plugins/daterangepicker/daterangepicker.js'); ?>"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'); ?>"></script>
-<!-- Summernote -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/summernote/summernote-bs4.min.js'); ?>"></script>
-<!-- overlayScrollbars -->
-<script src="<?php echo base_url('/assets/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'); ?>"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url('/assets/adminlte/dist/js/adminlte.js'); ?>"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url('/assets/adminlte/dist/js/demo.js'); ?>"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo base_url('/assets/adminlte/dist/js/pages/dashboard.js'); ?>"></script>
-</body>
-</html>

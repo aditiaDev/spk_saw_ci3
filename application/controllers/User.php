@@ -6,14 +6,21 @@ class User extends CI_Controller {
   public function __construct(){
     parent::__construct();
 
-    $this->load->model('UserModel'); // Load SiswaModel ke controller ini
+    $this->load->model('UserModel'); // Load Model
   }
 
   public function index(){
     // $data['model'] = $this->UserModel->getData();
 
     // $this->load->view('home', $data);
-    $this->load->view('home');
+    $this->load->view('template/header');
+    $this->load->view('template/user');
+    $this->load->view('template/footer');
+  }
+
+  public function getAllUser(){
+  	$data['data'] = $this->db->get('tb_user')->result();
+  	echo json_encode($data);
   }
 
 //   public function simpan(){
