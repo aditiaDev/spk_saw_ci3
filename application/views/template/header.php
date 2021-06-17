@@ -151,6 +151,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url("rangking")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="RANGKING"){echo 'active';}?>">
+              <i class="nav-icon fas fa-chart-bar"></i>
+              <p>
+                Perangkingan
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -31,4 +31,19 @@ class Nilai extends CI_Controller {
   	echo json_encode($data);
   }
 
+  public function getDtlNilai(){
+    $sql = "SELECT 
+                    a.id_kriteria, a.nilai, d.nm_kriteria
+                    FROM tb_nilai a, tb_pelamar b, tb_lowongan_kerja c, tb_kriteria d
+                    WHERE a.id_pelamar=b.id_pelamar
+                    AND b.id_lowongan_kerja=c.id_lowongan_kerja
+                    AND a.id_kriteria=d.id_kriteria
+                    AND c.id_lowongan_kerja='".$this->input->post('id_lowongan_kerja')."'
+                    AND a.id_pelamar='".$this->input->post('id_pelamar')."'
+                    ORDER BY a.id_kriteria";
+    $data['data'] = $this->db->query($sql)->result();
+
+  	echo json_encode($data);
+  }
+
 }

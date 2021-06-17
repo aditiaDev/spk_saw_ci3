@@ -2,6 +2,15 @@
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
+<style>
+td.details-control {
+    background: url(<?php echo base_url('/assets/adminlte/plugins/datatables/details_open.png') ?>) no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url(<?php echo base_url('/assets/adminlte/plugins/datatables/details_close.png') ?>) no-repeat center center;
+}
+</style>
 <div class="content-wrapper">  
   <section class="content">
     <div class="container-fluid">
@@ -45,8 +54,22 @@
   $(function () {
     
 
+    function format ( data ) {
+        var Row="";
+        $.each( data, function( key, value ) {
+          // console.log(value)
+          Row += '<tr>'+
+                      '<td>'+value.id_kriteria+'</td>'+
+                      '<td>'+value.nm_kriteria+'</td>'+
+                      '<td>'+value.nilai+'</td>'+
+                    '</tr>';
+        });
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'
+                      +Row+
+                  '</table>';
+    }
 
-    $("#tb_data").DataTable({
+    var tb_data = $("#tb_data").DataTable({
       "order": [[ 0, "asc" ]],
       "pageLength": 25,
       "autoWidth": false,
@@ -65,7 +88,8 @@
           { "data": "nm_pelamar" },{ "data": "nm_lowongan_kerja" },
           { "data": null,
             "render" : function(data){
-              return "<button class='btn btn-xs btn-default' onclick='detailData(\""+data.id_pelamar+"\",\""+data.id_lowongan_kerja+"\");'><i class='fas fa-edit'></i> Detail</button>"
+              // return "<button class='btn btn-xs btn-default' onclick='detailData(\""+data.id_pelamar+"\",\""+data.id_lowongan_kerja+"\");'><i class='fas fa-edit'></i> Detail</button>"
+              return "<button class='btn btn-xs btn-default detail_data'><i class='fas fa-edit'></i> Detail</button>"
             },
             className: "text-center"
           },
@@ -78,6 +102,40 @@
           },
       ]
     })
+
+    $('#tb_data tbody').on('click', 'td>button.detail_data', function () {
+      
+        var tr = $(this).closest('tr');
+        var row = tb_data.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            console.log(row.data())
+            
+            $.ajax({
+              url: "<?php echo site_url('nilai/getDtlNilai') ?>",
+              type: "POST",
+              // dataType: "JSON",
+              data: {
+                id_pelamar: row.data().id_pelamar,
+                id_lowongan_kerja: row.data().id_lowongan_kerja
+              },
+              success: function(data){
+                datas = JSON.parse(data)
+                data = datas['data']
+                row.child( format(data) ).show();
+                tr.addClass('shown');
+              
+              }
+            })
+            
+        }
+    } );
 
 
   });
