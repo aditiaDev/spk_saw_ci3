@@ -117,7 +117,6 @@
       $("#modal_add").modal('hide')
     })
 
-
   });
 
   function REFRESH_DATA(){

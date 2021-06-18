@@ -36,7 +36,7 @@
 <script src="<?php echo base_url('/assets/adminlte/plugins/jquery-knob/jquery.knob.min.js'); ?>"></script>
 <!-- daterangepicker -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/moment/moment.min.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/adminlte/plugins/daterangepicker/daterangepicker.js'); ?>"></script>
+<script src="<?php echo base_url('/assets/adminlte/plugins/datepicker/bootstrap-datepicker.js'); ?>"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'); ?>"></script>
 <!-- Summernote -->

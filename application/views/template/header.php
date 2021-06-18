@@ -22,7 +22,7 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/daterangepicker/daterangepicker.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/datepicker/datepicker3.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/toastr/toastr.min.css'); ?>">
   <!-- summernote -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/summernote/summernote-bs4.min.css'); ?>">
