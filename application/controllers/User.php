@@ -23,59 +23,70 @@ class User extends CI_Controller {
   	echo json_encode($data);
   }
 
-//   public function simpan(){
-//     if($this->SiswaModel->validation("save")){ // Jika validasi sukses atau hasil validasi adalah true
-//       $this->SiswaModel->save(); // Panggil fungsi save() yang ada di SiswaModel.php
+  
 
-//       // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
-//       $html = $this->load->view('siswa/view', array('model'=>$this->SiswaModel->view()), true);
-//       $callback = array(
-//         'status'=>'sukses',
-//         'pesan'=>'Data berhasil disimpan',
-//         'html'=>$html
-//       );
-//     }else{
-//       $callback = array(
-//         'status'=>'gagal',
-//         'pesan'=>validation_errors()
-//       );
-//     }
+  public function saveData(){
+    
+    
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('username', 'Username', 'required|is_unique[tb_user.username]');
+    $this->form_validation->set_rules('password', 'password', 'required|min_length[6]');
+    $this->form_validation->set_rules('level', 'Level', 'required');
 
-//     echo json_encode($callback);
-//   }
+    if($this->form_validation->run() == FALSE){
+      // echo validation_errors();
+      $output = array("status" => "error", "message" => validation_errors());
+      echo json_encode($output);
+      return false;
+    }
+    
+    $data = array(
+              "username" => $this->input->post('username'),
+              "password" => $this->input->post('password'),
+              "level" => $this->input->post('level'),
+            );
+    $this->db->insert('tb_user', $data);
+    $output = array("status" => "success", "message" => "Data Berhasil Disimpan");
+    echo json_encode($output);
 
-//   public function ubah($id){
-//     if($this->SiswaModel->validation("update")){ // Jika validasi sukses atau hasil validasi adalah true
-//       $this->SiswaModel->edit($id); // Panggil fungsi edit() yang ada di SiswaModel.php
+  }
 
-//       // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
-//       $html = $this->load->view('siswa/view', array('model'=>$this->SiswaModel->view()), true);
-//       $callback = array(
-//         'status'=>'sukses',
-//         'pesan'=>'Data berhasil diubah',
-//         'html'=>$html
-//       );
-//     }else{
-//       $callback = array(
-//         'status'=>'gagal',
-//         'pesan'=>validation_errors()
-//       );
-//     }
+  public function updateData(){
 
-//     echo json_encode($callback);
-//   }
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('username', 'Username', 'required');
+    $this->form_validation->set_rules('password', 'password', 'required|min_length[6]');
+    $this->form_validation->set_rules('level', 'Level', 'required');
 
-//   public function hapus($id){
-//     $this->SiswaModel->delete($id); // Panggil fungsi delete() yang ada di SiswaModel.php
+    if($this->form_validation->run() == FALSE){
+      // echo validation_errors();
+      $output = array("status" => "error", "message" => validation_errors());
+      echo json_encode($output);
+      return false;
+    }
 
-//     // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
-//     $html = $this->load->view('siswa/view', array('model'=>$this->SiswaModel->view()), true);
-//     $callback = array(
-//       'status'=>'sukses',
-//       'pesan'=>'Data berhasil dihapus',
-//       'html'=>$html
-//     );
+    $data = array(
+      "username" => $this->input->post('username'),
+      "password" => $this->input->post('password'),
+      "level" => $this->input->post('level'),
+    );
+    $this->db->where('id_user', $this->input->post('id_user'));
+    $this->db->update('tb_user', $data);
+    if($this->db->error()['message'] != ""){
+      $output = array("status" => "error", "message" => $this->db->error()['message']);
+      echo json_encode($output);
+      return false;
+    }
+    $output = array("status" => "success", "message" => "Data Berhasil di Update");
+    echo json_encode($output);
+  }
 
-//     echo json_encode($callback);
-//   }
+  public function deleteData(){
+    $this->db->where('id_user', $this->input->post('id_user'));
+    $this->db->delete('tb_user');
+
+    $output = array("status" => "success", "message" => "Data Berhasil di Hapus");
+    echo json_encode($output);
+  }
+
 }

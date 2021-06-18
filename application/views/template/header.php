@@ -23,10 +23,15 @@
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/daterangepicker/daterangepicker.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/toastr/toastr.min.css'); ?>">
   <!-- summernote -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/summernote/summernote-bs4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/css/loader.css'); ?>">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+<div class="before-loader" id="LOADER" style="display: none;">
+  <div class="loader5" ></div>
+</div>
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -122,7 +127,7 @@
               <li class="nav-item">
                 <a href="<?php echo base_url("loker/")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="LOKER"){echo 'active';}?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Data Loker</p>
+                  <p>Data Lowker</p>
                 </a>
               </li>
             </ul>

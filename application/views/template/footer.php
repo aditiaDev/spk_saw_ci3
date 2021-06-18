@@ -24,6 +24,7 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('/assets/adminlte/plugins/toastr/toastr.min.js'); ?>"></script>
 <!-- ChartJS -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/chart.js/Chart.min.js'); ?>"></script>
 <!-- Sparkline -->

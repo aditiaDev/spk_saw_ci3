@@ -23,10 +23,7 @@ class Rangking extends CI_Controller {
   }
 
   public function getRangking(){
-    $id_loker = 1;
-    
-    
-
+    $id_loker = $this->input->post('id_lowongan_kerja');
 
     $tr_pelamar="";
     $pelamar = $this->db->query("SELECT id_pelamar, nm_pelamar FROM tb_pelamar WHERE id_lowongan_kerja='".$id_loker."' ORDER BY id_pelamar")->result_array();
@@ -35,6 +32,7 @@ class Rangking extends CI_Controller {
         $th_kriteria="<th></th>";
         $th_bobot="<th>Bobot</th>";
         $td = "";
+        $total_normalisasi=0;
         $kriteria = $this->db->query("SELECT id_kriteria, bobot, jenis_kiteria FROM tb_kriteria ORDER BY id_kriteria")->result_array();
         foreach($kriteria as $list){
             $th_kriteria .= "<th>".$list['id_kriteria']."</th>";
@@ -67,24 +65,73 @@ class Rangking extends CI_Controller {
                 }
 
                 $td .= "<td>".$nilai_r."</td>";
+
+                $data = array(
+                  "id_pelamar" => $listPelamar['id_pelamar'],
+                  "id_kriteria" => $list['id_kriteria'],
+                  "nilai_normalisasi" => $nilai_r,
+                );
+                $this->db->insert('tb_normalisasi', $data);
+                $total_normalisasi = $total_normalisasi+($nilai_r*$list['bobot']);
             }
             
+            
+
         }
+        $data_rangking = array(
+                  "id_pelamar" => $listPelamar['id_pelamar'],
+                  "total_nilai" => $total_normalisasi,
+                );
+            $this->db->insert('tb_rangking', $data_rangking);
+
         $tr_pelamar .= "<tr>
                             <td>".$listPelamar['nm_pelamar']."</td>
                             ".$td."
+                            <td>".$total_normalisasi."</td>
                         </tr>";
     }
 
-    $table = "<table  border='1' style='border: 1px solid #dee2e6;border-collapse: collapse;width:100%;'>
+    /*$table = "<table  border='1' style='border: 1px solid #dee2e6;border-collapse: collapse;width:100%;'>
+                <thead>";*/
+    $table = "<table class='tabel'>
                 <thead>";
-    $table .= "<tr>".$th_kriteria."<th rowspan='2'>Total</th><th rowspan='2'>Rangking</th></tr>";
+    $table .= "<tr>".$th_kriteria."<th rowspan='2' style='vertical-align: middle;text-align: center;'>Total</th></tr>";
     $table .= "<tr>".$th_bobot."</tr>";
     $table .= "</thead>
                 <tbody>";
     $table .= $tr_pelamar;
     $table .= "</tbody></table>";
     echo $table;
+
+    // $kriteria = $this->db->query("")->result_array();
+    $this->db->select('a.*, b.nm_pelamar');
+    $this->db->from('tb_rangking a'); 
+    $this->db->join('tb_pelamar b', 'a.id_pelamar=b.id_pelamar', 'left');
+    $this->db->order_by('a.total_nilai','desc');         
+    $data_ranks = $this->db->get()->result();
+
+    $row_rank="";
+    $no=1;
+    foreach($data_ranks as $data_rank){
+        $row_rank.="<tr>
+                        <td>".$no++."</td>
+                        <td>".$data_rank->nm_pelamar."</td>
+                        <td>".$data_rank->total_nilai."</td>
+                    </tr>";
+    }
+
+
+    $tb_rank ="<table class='tabel' style='width: 50%;margin-top:15px;'>
+                    <thead>
+                        <th style='width: 65px;'>Rank</th>
+                        <th>Pelamar</th>
+                        <th>Nilai</th>
+                    </thead>
+                    <tbody>
+                        ".$row_rank."
+                    </tbody>
+                </table>";
+    echo $tb_rank;
   }
 
 }
