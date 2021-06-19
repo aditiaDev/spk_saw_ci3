@@ -37,6 +37,7 @@
 <!-- daterangepicker -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/moment/moment.min.js'); ?>"></script>
 <script src="<?php echo base_url('/assets/adminlte/plugins/datepicker/bootstrap-datepicker.js'); ?>"></script>
+<script src="<?php echo base_url('/assets/adminlte/plugins/select2/js/select2.full.min.js'); ?>"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?php echo base_url('/assets/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'); ?>"></script>
 <!-- Summernote -->

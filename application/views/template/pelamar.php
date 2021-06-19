@@ -25,7 +25,8 @@
                   <th>Telp.</th>
                   <th style="width: 45px;">Lulusan</th>
                   <th>Jurusan</th>
-                  <th style="width: 118px;">Action</th>
+                  <th>Kemampuan</th>
+                  <th style="min-width: 120px;">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,7 +58,7 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>Lowongan Kerja</label>
-                      <select class="form-control" name="id_lowongan_kerja"></select>
+                      <select class="form-control select2" name="id_lowongan_kerja"></select>
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -84,12 +85,34 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- input states -->
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Pendidikan Terakhir</label>
+                      <select class="form-control" name="lulusan">
+                        <option value="SMA">SMA</option>
+                        <option value="DI">DI</option>
+                        <option value="DII">DII</option>
+                        <option value="DIII">DIII</option>
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>Jurusan</label>
+                      <input type="text" class="form-control" name="jurusan">
+                    </div>
+                  </div>
+                </div>
                 <div class="form-group">
-                  <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
-                    success</label>
-                  <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
+                  <P>Alamat</P>
+                  <input type="text" class="form-control" name="alamat_pelamar">
+                </div>
+                <div class="form-group">
+                  <P>Kemampuan</P>
+                  <textarea name="kemampuan" class="form-control" rows="5"></textarea>
                 </div>
               </div>
               
@@ -117,12 +140,45 @@
 
     REFRESH_DATA()
     
+    $(".select2").select2()
+
     $("#add_data").click(function(){
       $("#FRM_DATA")[0].reset()
       save_method = "save"
       $("#modal_add .modal-title").text('Add Data')
       $("#modal_add").modal('show')
     }) 
+
+    $.ajax({
+      url: "<?php echo site_url('loker/getLokerBuka') ?>",
+      type: "GET",
+      dataType: "JSON",
+      success: function(data){
+        var row="";
+        $.each(data, (index, item) => {
+            row += "<option value='"+item.id_lowongan_kerja+"'>"+item.nm_lowongan_kerja+"</option>"
+        });
+        console.log(row)
+        $("[name='id_lowongan_kerja']").html(row)
+      }
+    })
+
+    $("#BTN_SAVE").click(function(){
+      event.preventDefault();
+      var formData = $("#FRM_DATA").serialize();
+
+      
+      if(save_method == 'save') {
+          urlPost = "<?php echo site_url('pelamar/saveData') ?>";
+      }else{
+          urlPost = "<?php echo site_url('pelamar/updateData') ?>";
+          formData+="&id_pelamar="+id_edit
+      }
+      // console.log(formData)
+      ACTION(urlPost, formData)
+      $("#modal_add").modal('hide')
+    })
+
 
   });
 
@@ -146,15 +202,67 @@
           },
           { "data": "nm_lowongan_kerja" },
           { "data": "nm_pelamar" },{ "data": "jenis_kelamin" },{ "data": "alamat_pelamar" },
-          { "data": "no_tlp" },{ "data": "lulusan" },{ "data": "jurusan" },
+          { "data": "no_tlp" },{ "data": "lulusan" },{ "data": "jurusan" },{ "data": "kemampuan" },
           { "data": null, 
             "render" : function(data){
               return "<button class='btn btn-sm btn-warning' onclick='editData("+JSON.stringify(data)+");'><i class='fas fa-edit'></i> Edit</button> "+
-                "<button class='btn btn-sm btn-danger' onclick='deleteData(\""+data.id_kriteria+"\");'><i class='fas fa-trash'></i> Delete</button>"
+                "<button class='btn btn-sm btn-danger' onclick='deleteData(\""+data.id_pelamar+"\");'><i class='fas fa-trash'></i> Delete</button>"
             },
             className: "text-center"
           },
       ]
     })
+  }
+
+  function ACTION(urlPost, formData){
+      $.ajax({
+          url: urlPost,
+          type: "POST",
+          data: formData,
+          dataType: "JSON",
+          beforeSend: function () {
+            $("#LOADER").show();
+          },
+          complete: function () {
+            $("#LOADER").hide();
+          },
+          success: function(data){
+            // console.log(data)
+            if (data.status == "success") {
+              toastr.info(data.message)
+              
+
+              REFRESH_DATA()
+
+            }else{
+              toastr.error(data.message)
+            }
+          }
+      })
+  }
+
+  function editData(data, index){
+    console.log(data)
+    save_method = "edit"
+    id_edit = data.id_pelamar;
+    console.log(id_edit)
+    $("#modal_add .modal-title").text('Edit Data')
+    $("[name='id_lowongan_kerja']").val(data.id_lowongan_kerja).change()
+    $("[name='nm_pelamar']").val(data.nm_pelamar)
+    $("[name='no_tlp']").val(data.no_tlp)
+    $("[name='jenis_kelamin']").val(data.jenis_kelamin)
+    $("[name='lulusan']").val(data.lulusan)
+    $("[name='jurusan']").val(data.jurusan)
+    $("[name='kemampuan']").val(data.kemampuan)
+    $("[name='alamat_pelamar']").val(data.alamat_pelamar)
+    $("#modal_add").modal('show')
+  }
+
+  function deleteData(id){
+    if(!confirm('Delete this data?')) return
+
+    urlPost = "<?php echo site_url('pelamar/deleteData') ?>";
+    formData = "id_pelamar="+id
+    ACTION(urlPost, formData)
   }
 </script>

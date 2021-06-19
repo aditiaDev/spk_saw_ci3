@@ -24,6 +24,9 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/datepicker/datepicker3.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/toastr/toastr.min.css'); ?>">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/select2/css/select2.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); ?>">
   <!-- summernote -->
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/summernote/summernote-bs4.min.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('/assets/css/loader.css'); ?>">

@@ -10,7 +10,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <h3>Selamat datang</h3>
+              <h3>Selamat datang pada Aplikasi Sistem Pendukung Keputusan</h3>
             </div>
             <!-- /.card-body -->
           </div>

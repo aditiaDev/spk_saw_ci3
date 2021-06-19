@@ -165,4 +165,14 @@ class Loker extends CI_Controller {
 
   }
 
+  public function getLokerBuka(){
+    $this->db->select('*');
+    $this->db->from('tb_lowongan_kerja');
+    $this->db->where('status_lowongan', 'dibuka');
+    $this->db->order_by('nm_lowongan_kerja', 'asc');
+    $data = $this->db->get()->result();
+
+    echo json_encode($data);
+  }
+
 }
