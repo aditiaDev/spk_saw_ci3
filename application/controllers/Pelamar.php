@@ -6,7 +6,8 @@ class Pelamar extends CI_Controller {
   public function __construct(){
     parent::__construct();
 
-    // $this->load->model('KriteriaModel'); // Load Model
+    if(!$this->session->userdata('id_user'))
+      redirect('login', 'refresh');
   }
 
   public function index(){

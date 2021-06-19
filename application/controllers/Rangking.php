@@ -5,7 +5,10 @@ class Rangking extends CI_Controller {
 
   public function __construct(){
     parent::__construct();
+    if(!$this->session->userdata('id_user'))
+      redirect('login', 'refresh');
     $this->load->model('RangkingModel');
+
   }
 
   public function index(){
