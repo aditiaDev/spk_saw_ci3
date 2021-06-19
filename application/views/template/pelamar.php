@@ -158,7 +158,7 @@
         $.each(data, (index, item) => {
             row += "<option value='"+item.id_lowongan_kerja+"'>"+item.nm_lowongan_kerja+"</option>"
         });
-        console.log(row)
+        
         $("[name='id_lowongan_kerja']").html(row)
       }
     })

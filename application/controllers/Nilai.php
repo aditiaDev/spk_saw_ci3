@@ -47,4 +47,97 @@ class Nilai extends CI_Controller {
   	echo json_encode($data);
   }
 
+  public function getPelamarBelumNilai(){
+    $data = $this->db->query("SELECT id_pelamar, nm_pelamar FROM tb_pelamar
+                      WHERE id_pelamar not in(
+                      SELECT id_pelamar FROM tb_nilai
+                      )")->result();
+
+    echo json_encode($data);
+  }
+
+  public function saveData(){
+    
+    
+    $this->load->library('form_validation');
+      $this->form_validation->set_rules('id_pelamar', 'Nama Pelamar', 'required');
+      $this->form_validation->set_rules('id_kriteria[]', 'Kriteria', 'required');
+      $this->form_validation->set_rules('nilai[]', 'Nilai', 'required|numeric');
+
+      if($this->form_validation->run() == FALSE){
+        $output = array("status" => "error", "message" => validation_errors());
+        echo json_encode($output);
+        return false;
+      }
+    
+    
+    
+    foreach($this->input->post('id_kriteria') as $key => $each){
+      
+
+      $data[] = array(
+        'id_pelamar'  => $this->input->post('id_pelamar'),
+        'id_kriteria'  => $this->input->post('id_kriteria')[$key],
+        'nilai'  => $this->input->post('nilai')[$key],
+      );
+    }
+
+    $this->db->insert_batch('tb_nilai', $data);
+    $output = array("status" => "success", "message" => "Data Berhasil Disimpan");
+    echo json_encode($output);
+
+  }
+
+  public function getNilaiPelamar($id){
+    $data = $this->db->query("SELECT a.*, b.nm_kriteria, b.jenis_kiteria FROM tb_nilai a, tb_kriteria b
+                      WHERE a.id_kriteria=b.id_kriteria
+                      AND a.id_pelamar='".$id."'
+                      ORDER BY a.id_kriteria")->result();
+    echo json_encode($data);
+  }
+
+  public function updateData(){
+    
+    
+    $this->load->library('form_validation');
+      $this->form_validation->set_rules('id_pelamar', 'Nama Pelamar', 'required');
+      $this->form_validation->set_rules('id_kriteria[]', 'Kriteria', 'required');
+      $this->form_validation->set_rules('nilai[]', 'Nilai', 'required|numeric');
+
+      if($this->form_validation->run() == FALSE){
+        $output = array("status" => "error", "message" => validation_errors());
+        echo json_encode($output);
+        return false;
+      }
+    
+    
+    
+    foreach($this->input->post('id_kriteria') as $key => $each){
+      
+
+      $data = array(
+        'nilai'  => $this->input->post('nilai')[$key],
+      );
+
+      $where = array(
+        'id_pelamar' => $this->input->post('id_pelamar'), 
+        'id_kriteria'  => $this->input->post('id_kriteria')[$key],
+      );
+      $this->db->update('tb_nilai', $data, $where);
+    }
+
+
+    $output = array("status" => "success", "message" => "Data Berhasil Disimpan");
+    echo json_encode($output);
+
+  }
+
+  public function deleteData(){
+    $this->db->where('id_pelamar', $this->input->post('id_pelamar'));
+    $this->db->delete('tb_nilai');
+
+    $output = array("status" => "success", "message" => "Data Berhasil di Hapus");
+    echo json_encode($output);
+  }
+
 }

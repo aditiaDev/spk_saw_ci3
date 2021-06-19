@@ -20,7 +20,11 @@ class Kriteria extends CI_Controller {
   }
 
   public function getAllData(){
-  	$data['data'] = $this->db->get('tb_kriteria')->result();
+  	
+    $this->db->from('tb_kriteria');
+    $this->db->order_by('id_kriteria', 'asc');
+    $data['data'] = $this->db->get()->result();
+
   	echo json_encode($data);
   }
 
