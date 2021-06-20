@@ -57,7 +57,7 @@
               </div>
               <div class="form-group">
                 <p>Keterangan</p>
-                <textarea name="ket_lowongan" class="form-control" rows="5"></textarea>
+                <textarea name="ket_lowongan" class="form-control summernote" rows="5"></textarea>
               </div>
               <div class="form-group">
                 <p>File Lowker</p>
@@ -106,11 +106,14 @@
       autoclose: true,
       format: 'dd-M-yyyy'
     });
+
+    $('.summernote').summernote({height: 300})
     
     REFRESH_DATA()
 
     $("#add_data").click(function(){
       $("#FRM_DATA")[0].reset()
+      $("[name='foto_lowongan']").val('')
       save_method = "save"
       $("#modal_add .modal-title").text('Add Data')
       $("#modal_add").modal('show')
@@ -152,7 +155,12 @@
                   return meta.row + meta.settings._iDisplayStart + 1;
               }
           },
-          { "data": "nm_lowongan_kerja" },{ "data": "ket_lowongan" },
+          { "data": "nm_lowongan_kerja" },
+          { "data": "ket_lowongan",
+            "render" : function(data){
+              return data.replace(/<\/?[^>]+(>|$)/g, "").substr(0, 200)
+            }
+          },
           { "data": "foto_lowongan",
             render: function (data, type, row, meta) {
                 if(data){
@@ -213,9 +221,11 @@
     save_method = "edit"
     id_edit = data.id_lowongan_kerja;
     console.log(id_edit)
+    $("[name='foto_lowongan']").val('')
     $("#modal_add .modal-title").text('Edit Data')
     $("[name='nm_lowongan_kerja']").val(data.nm_lowongan_kerja)
-    $("[name='ket_lowongan']").val(data.ket_lowongan)
+    // $("[name='ket_lowongan']").val(data.ket_lowongan)
+    $("[name='ket_lowongan']").summernote("code", data.ket_lowongan.replace(/<\/?[^>]+(>|$)/g, ""))
     $("[name='tgl_akhir']").val(data.tgl_akhir)
     $("[name='tgl_awal']").val(data.tgl_awal)
     $("[name='status_lowongan']").val(data.status_lowongan)

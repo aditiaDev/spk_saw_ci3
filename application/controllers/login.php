@@ -44,4 +44,8 @@ class Login extends CI_Controller {
     redirect('login', 'refresh');
   }
 
+  public function register(){
+    $this->load->view('register');
+  }
+
 }

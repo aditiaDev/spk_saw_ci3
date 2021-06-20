@@ -52,27 +52,14 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-2" style="margin-bottom: 10px;">
-                  <select style="height: 32px;" name="" id="" class="form-control"></select>
+                  <select style="height: 32px;" name="id_lowongan_kerja"  class="form-control select2"></select>
                 </div>
                 <div class="col-3" style="margin-bottom: 10px;">
                   <button class="btn btn-sm btn-default" id="proses"><i class="fas fa-check"></i> Proses</button>
                   <button class="btn btn-sm btn-warning" id="ulang_ranking" style="display: none;"><i class="fas fa-redo"></i> Ranking ulang</button>
                 </div>
               </div>
-              <!-- <table id="tb_data" border="1" style="border: 1px solid #dee2e6;border-collapse: collapse;width:100%;">
-                <thead>
-                <tr>
-                  <th>ID Kriteria</th>
-                  <th>Kriteria</th>
-                  <th>Jenis Kriteria</th>
-                  <th>Bobot</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-              </table> -->
+              
               <span id="tb_normalisasi"></span>
             </div>
             <!-- /.card-body -->
@@ -90,13 +77,26 @@
 <script>
   $(function () {
     
+    $.ajax({
+      url: "<?php echo site_url('loker/getLokerBuka') ?>",
+      type: "GET",
+      dataType: "JSON",
+      success: function(data){
+        var row="";
+        $.each(data, (index, item) => {
+            row += "<option value='"+item.id_lowongan_kerja+"'>"+item.nm_lowongan_kerja+"</option>"
+        });
+        
+        $("[name='id_lowongan_kerja']").html(row)
+      }
+    })
 
     $("#proses").click(function(){
       $.ajax({
         url: "<?php echo site_url('rangking/getRangking') ?>",
         type: "POST",
         data: {
-          id_lowongan_kerja: 1
+          id_lowongan_kerja: $("[name='id_lowongan_kerja']").val()
         },
         success: function(data){
           console.log(data)

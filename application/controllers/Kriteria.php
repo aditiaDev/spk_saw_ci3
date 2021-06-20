@@ -15,6 +15,7 @@ class Kriteria extends CI_Controller {
 
     // $this->load->view('home', $data);
     $this->load->view('template/header');
+    $this->load->view('template/sidebar');
     $this->load->view('template/kriteria');
     $this->load->view('template/footer');
   }

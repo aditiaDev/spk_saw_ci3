@@ -16,6 +16,7 @@ class Rangking extends CI_Controller {
 
     // $this->load->view('home', $data);
     $this->load->view('template/header');
+    $this->load->view('template/sidebar');
     $this->load->view('template/rangking');
     $this->load->view('template/footer');
   }
@@ -29,7 +30,10 @@ class Rangking extends CI_Controller {
     $id_loker = $this->input->post('id_lowongan_kerja');
 
     $tr_pelamar="";
-    $pelamar = $this->db->query("SELECT id_pelamar, nm_pelamar FROM tb_pelamar WHERE id_lowongan_kerja='".$id_loker."' ORDER BY id_pelamar")->result_array();
+    $pelamar = $this->db->query("SELECT id_pelamar, nm_pelamar FROM tb_pelamar WHERE id_lowongan_kerja='".$id_loker."' 
+                                AND id_pelamar IN(
+                                SELECT id_pelamar FROM tb_nilai
+                                ) ORDER BY id_pelamar")->result_array();
     
     foreach($pelamar as $listPelamar){
         $th_kriteria="<th></th>";

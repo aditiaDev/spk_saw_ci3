@@ -12,6 +12,7 @@ class Loker extends CI_Controller {
 
   public function index(){
     $this->load->view('template/header');
+    $this->load->view('template/sidebar');
     $this->load->view('template/loker');
     $this->load->view('template/footer');
   }
@@ -23,7 +24,8 @@ class Loker extends CI_Controller {
       $row = array();
       $data['data'][$no]['id_lowongan_kerja'] = $list->id_lowongan_kerja;
       $data['data'][$no]['nm_lowongan_kerja'] = $list->nm_lowongan_kerja;
-      $data['data'][$no]['ket_lowongan'] = $list->ket_lowongan;
+      // $data['data'][$no]['ket_lowongan'] = $list->ket_lowongan;
+      $data['data'][$no]['ket_lowongan'] = preg_replace('/<\/?[^>]+(>|$)/i', "", $list->ket_lowongan);
       $data['data'][$no]['status_lowongan'] = $list->status_lowongan;
       $data['data'][$no]['foto_lowongan'] = $list->foto_lowongan;
       $data['data'][$no]['tgl_awal'] = date('d F Y', strtotime($list->tgl_awal));
@@ -171,6 +173,14 @@ class Loker extends CI_Controller {
     $this->db->where('status_lowongan', 'dibuka');
     $this->db->order_by('nm_lowongan_kerja', 'asc');
     $data = $this->db->get()->result();
+
+    echo json_encode($data);
+  }
+
+  public function getById(){
+    $this->db->from('tb_lowongan_kerja');
+    $this->db->where('id_lowongan_kerja', $this->input->post('id_lowongan_kerja'));
+    $data = $this->db->get()->row();
 
     echo json_encode($data);
   }

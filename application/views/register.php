@@ -16,41 +16,81 @@
   <link rel="stylesheet" href="<?php echo base_url('/assets/adminlte/plugins/toastr/toastr.min.css'); ?>">
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="login-box" style="width: 540px;">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <h3>Sistem Pendukung Keputusan</h3>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Register a new user</p>
 
       <form method="post" id="FRM_DATA">
-        <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control" placeholder="Username" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Posisi yg dilamar</label>
+              <input type="text" class="form-control select2" name="id_lowongan_kerja">
             </div>
           </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Nama Pelamar</label>
+              <input type="text" class="form-control" name="nm_pelamar">
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Jenis Kelamin</label>
+              <select class="form-control" name="jenis_kelamin">
+                <option value="pria">Pria</option>
+                <option value="wanita">Wanita</option>
+              </select>
             </div>
           </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>No. Telp</label>
+              <input type="text" class="form-control" name="no_tlp">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Pendidikan Terakhir</label>
+              <select class="form-control" name="lulusan">
+                <option value="SMA">SMA</option>
+                <option value="DI">DI</option>
+                <option value="DII">DII</option>
+                <option value="DIII">DIII</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Jurusan</label>
+              <input type="text" class="form-control" name="jurusan">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <P>Alamat</P>
+          <input type="text" class="form-control" name="alamat_pelamar">
+        </div>
+        <div class="form-group">
+          <P>Kemampuan</P>
+          <textarea name="kemampuan" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <a href="<?php echo base_url("login")?>" class="btn btn-warning btn-block">Back</a>
+          </div>
+          <div class="col-4"></div>
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -59,9 +99,6 @@
         </div>
       </form>
 
-      <p class="mb-0">
-        <a href="<?php echo base_url("login/register")?>" class="text-center">Register a New User</a>
-      </p>
     </div>
     <!-- /.card-body -->
   </div>
