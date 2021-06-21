@@ -106,6 +106,22 @@
         }
       })
     })
+
+    $("#ulang_ranking").click(function(){
+      $.ajax({
+        url: "<?php echo site_url('rangking/ulangRangking') ?>",
+        type: "POST",
+        data: {
+          id_lowongan_kerja: $("[name='id_lowongan_kerja']").val()
+        },
+        success: function(data){
+          console.log(data)
+          $("#tb_normalisasi").html("")
+          $("#proses").show()
+          $("#ulang_ranking").hide()
+        }
+      })
+    })
     
 
 

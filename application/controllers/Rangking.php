@@ -26,7 +26,21 @@ class Rangking extends CI_Controller {
   	echo json_encode($data);
   }
 
+  public function ulangRangking(){
+    $this->db->query("DELETE FROM tb_rangking WHERE id_pelamar IN(
+      SELECT id_pelamar FROM tb_pelamar WHERE id_lowongan_kerja='".$this->input->post('id_lowongan_kerja')."'
+      )");
+
+    $this->db->query("DELETE FROM tb_normalisasi WHERE id_pelamar IN(
+      SELECT id_pelamar FROM tb_pelamar WHERE id_lowongan_kerja='".$this->input->post('id_lowongan_kerja')."'
+      )");
+    
+    // $output = array("status" => "success");
+    // echo json_encode($output);
+  }
+
   public function getRangking(){
+    $this->ulangRangking();
     $id_loker = $this->input->post('id_lowongan_kerja');
 
     $tr_pelamar="";
@@ -140,5 +154,7 @@ class Rangking extends CI_Controller {
                 </table>";
     echo $tb_rank;
   }
+
+  
 
 }

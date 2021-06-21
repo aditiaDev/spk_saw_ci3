@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <button class="btn btn-sm btn-info" style="margin-bottom: 10px;" id="add_data"><i class="fas fa-plus-circle"></i> Tambah</button>
+              
               <table id="tb_data" class="table table-bordered table-hover" style="font-size: 12px">
                 <thead>
                 <tr>
@@ -205,7 +205,7 @@
       "responsive": true,
       "pageLength": 25,
       "ajax": {
-          "url": "<?php echo site_url('pelamar/getAllData') ?>",
+          "url": "<?php echo site_url('pelamar/getAllDataUser') ?>",
           "type": "GET"
       },
       "columns": [
@@ -220,8 +220,7 @@
           { "data": "no_tlp" },{ "data": "lulusan" },{ "data": "jurusan" },{ "data": "kemampuan" },
           { "data": null, 
             "render" : function(data){
-              return "<button class='btn btn-sm btn-warning' onclick='editData("+JSON.stringify(data)+");'><i class='fas fa-edit'></i> Edit</button> "+
-                "<button class='btn btn-sm btn-danger' onclick='deleteData(\""+data.id_pelamar+"\");'><i class='fas fa-trash'></i> Delete</button>"
+              return "<button class='btn btn-sm btn-warning' onclick='editData("+JSON.stringify(data)+");'><i class='fas fa-edit'></i> Edit</button>"
             },
             className: "text-center"
           },

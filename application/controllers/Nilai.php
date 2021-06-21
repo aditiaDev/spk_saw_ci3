@@ -16,7 +16,10 @@ class Nilai extends CI_Controller {
     // $this->load->view('home', $data);
     $this->load->view('template/header');
     $this->load->view('template/sidebar');
-    $this->load->view('template/nilai');
+    if($this->session->userdata('level') == "calon_pelamar" )
+      $this->load->view('pelamar/nilai');
+    else
+      $this->load->view('template/nilai');
     $this->load->view('template/footer');
   }
 
@@ -27,6 +30,20 @@ class Nilai extends CI_Controller {
                     FROM tb_nilai a, tb_pelamar b, tb_lowongan_kerja c
                     WHERE a.id_pelamar=b.id_pelamar
                     AND b.id_lowongan_kerja=c.id_lowongan_kerja
+                    GROUP BY a.id_pelamar
+                    ORDER BY c.nm_lowongan_kerja, b.nm_pelamar")->result();
+
+  	echo json_encode($data);
+  }
+
+  public function getAllDataPelamar(){
+  	       
+    $data['data'] = $this->db->query("SELECT 
+                    a.id_nilai, a.id_pelamar, b.nm_pelamar, c.nm_lowongan_kerja, c.id_lowongan_kerja 
+                    FROM tb_nilai a, tb_pelamar b, tb_lowongan_kerja c
+                    WHERE a.id_pelamar=b.id_pelamar
+                    AND b.id_lowongan_kerja=c.id_lowongan_kerja
+                    AND b.id_user = '".$this->session->userdata('id_user')."'
                     GROUP BY a.id_pelamar
                     ORDER BY c.nm_lowongan_kerja, b.nm_pelamar")->result();
 
