@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Top Navigation</title>
+  <title>JobLook</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
-          <button class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+          <a class="btn btn-primary" href="<?php echo base_url('login') ?>"><i class="fas fa-sign-in-alt"></i> Login</a>
         </li>
         
       </ul>
@@ -103,8 +103,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a class="btn btn-info" id="btnLamar">Lamar Sekarang</a>
                 <div class="user-block" style="margin-top: 20px;float:none;">
                   <img class="img-circle img-bordered-sm" src="<?php echo base_url('/assets/adminlte/dist/img/AdminLTELogo.png'); ?>" alt="user image">
-                  <span class="username">
-                    <a href="#">Jonathan Burke Jr.</a>
+                  <span class="username" style="color: #007bff;" id="dtlNmLoker">
+                   
                   </span>
                   <span class="description" id="dtlDate"></span>
                 </div>
@@ -207,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         scrollTop: $("#dtlLowker").offset().top
     }, 2000)
     $.ajax({
-      url: "<?php echo site_url('loker/getById') ?>",
+      url: "<?php echo site_url('welcome/getById') ?>",
       type: "POST",
       data: {
         id_lowongan_kerja: id
@@ -215,7 +215,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       dataType: "JSON",
       success: function(data){
         console.log(data)
-        $("#btnLamar").attr('href',"<?php echo base_url("welcome/lamar/") ?>"+id)
+        $("#btnLamar").attr('href',"<?php echo base_url("login/register/") ?>"+id)
+        $("#dtlNmLoker").html(data.nm_lowongan_kerja)
         $("#dtlKetLowker").html(data.ket_lowongan)
         $("#dtlDate").html("Dibuka sampai "+data.tgl_akhir)
       }

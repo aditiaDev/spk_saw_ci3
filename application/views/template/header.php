@@ -50,7 +50,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="<?php echo base_url('home') ?>" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -62,11 +62,7 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+      
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -76,7 +72,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="<?php echo base_url('/assets/adminlte/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span style="font-size: 14px;" class="brand-text font-weight-light">SPK PENERIMAAN KARYAWAN</span>
+      <span style="font-size: 12px;" class="brand-text font-weight-light">SPK PENERIMAAN KARYAWAN</span>
     </a>
 
     <!-- Sidebar -->
@@ -87,7 +83,7 @@
           <img src="<?php echo base_url('/assets/adminlte/dist/img/user2-160x160.jpg'); ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Administrator</a>
+          <a href="#" class="d-block"><?php echo strtoupper($this->session->userdata('username')); ?></a>
         </div>
       </div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SPK Penerimaan Karyawan</title>
+  <title>JobLook</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -20,7 +20,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <h3>Sistem Pendukung Keputusan</h3>
+      <h3>JobLook</h3>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new user</p>
@@ -29,14 +29,29 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
-              <label>Posisi yg dilamar</label>
-              <input type="text" class="form-control select2" name="id_lowongan_kerja">
+              <label>Posisi yg dilamar </label>
+              <input type="hidden" class="form-control" name="id_lowongan_kerja" value="<?php echo $data->id_lowongan_kerja; ?>">
+              <input type="text" class="form-control" name="nm_lowongan_kerja" value="<?php echo $data->nm_lowongan_kerja; ?>" disabled>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label>Nama Pelamar</label>
               <input type="text" class="form-control" name="nm_pelamar">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" class="form-control" name="username" >
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" name="password">
             </div>
           </div>
         </div>
@@ -88,12 +103,12 @@
         </div>
         <div class="row">
           <div class="col-4">
-            <a href="<?php echo base_url("login")?>" class="btn btn-warning btn-block">Back</a>
+            <a href="<?php echo base_url("login")?>" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i> Login Page</a>
           </div>
           <div class="col-4"></div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-info btn-block">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -120,19 +135,20 @@
       event.preventDefault();
       var formData = $(this).serialize();
       $.ajax({
-          url: "<?php echo site_url('login/login') ?>",
+          url: "<?php echo site_url('login/signUp') ?>",
           type: "POST",
           data: formData,
           dataType: "JSON",
-          beforeSend: function () {
+          /*beforeSend: function () {
             $("#LOADER").show();
           },
           complete: function () {
             $("#LOADER").hide();
-          },
+          },*/
           success: function(data){
-            // console.log(data)
+            console.log(data)
             if (data.status == "success") {
+              alert('Pendaftaran Berhasil')
               window.location="<?php echo base_url('home');?>"
             }else{
               toastr.error(data.message)

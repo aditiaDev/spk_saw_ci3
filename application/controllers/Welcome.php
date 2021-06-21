@@ -56,4 +56,12 @@ class Welcome extends CI_Controller {
  
         echo json_encode($data);
   	}
+
+    public function getById(){
+        $this->db->from('tb_lowongan_kerja');
+        $this->db->where('id_lowongan_kerja', $this->input->post('id_lowongan_kerja'));
+        $data = $this->db->get()->row();
+
+        echo json_encode($data);
+    }
 }
