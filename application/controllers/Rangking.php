@@ -87,7 +87,7 @@ class Rangking extends CI_Controller {
                     $nilai_r = $nilai_MIN/$listNilai['nilai'];
                 }
 
-                $td .= "<td>".$nilai_r."</td>";
+                $td .= "<td>".number_format($nilai_r,4)."</td>";
 
                 $data = array(
                   "id_pelamar" => $listPelamar['id_pelamar'],
@@ -110,7 +110,7 @@ class Rangking extends CI_Controller {
         $tr_pelamar .= "<tr>
                             <td>".$listPelamar['nm_pelamar']."</td>
                             ".$td."
-                            <td>".$total_normalisasi."</td>
+                            <td>".number_format($total_normalisasi,4)."</td>
                         </tr>";
     }
 
@@ -140,7 +140,7 @@ class Rangking extends CI_Controller {
         $row_rank.="<tr>
                         <td>".$no++."</td>
                         <td>".$data_rank->nm_pelamar."</td>
-                        <td>".$data_rank->total_nilai."</td>
+                        <td>".number_format($data_rank->total_nilai,4)."</td>
                     </tr>";
     }
 
