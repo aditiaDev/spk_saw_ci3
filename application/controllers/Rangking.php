@@ -48,7 +48,9 @@ class Rangking extends CI_Controller {
                                 AND id_pelamar IN(
                                 SELECT id_pelamar FROM tb_nilai
                                 ) ORDER BY id_pelamar")->result_array();
-    
+    // print_r($pelamar);
+    $th_kriteria="<th></th>";
+    $th_bobot="<th>Bobot</th>";
     foreach($pelamar as $listPelamar){
         $th_kriteria="<th></th>";
         $th_bobot="<th>Bobot</th>";
@@ -128,6 +130,7 @@ class Rangking extends CI_Controller {
     $this->db->select('a.*, b.nm_pelamar');
     $this->db->from('tb_rangking a'); 
     $this->db->join('tb_pelamar b', 'a.id_pelamar=b.id_pelamar', 'left');
+    $this->db->where('id_lowongan_kerja',$id_loker);
     $this->db->order_by('a.total_nilai','desc');         
     $data_ranks = $this->db->get()->result();
 
