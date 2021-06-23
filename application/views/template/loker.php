@@ -9,7 +9,7 @@
         <div class="col-12">
           <div class="card" style="margin-top: 1rem">
             <div class="card-header">
-              <h3 class="card-title">Data Lowker <?php echo date("d-m-Y", strtotime('18-Jun-2021')) ?></h3>
+              <h3 class="card-title">Data Lowker </h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -24,7 +24,7 @@
                   <th>Start</th>
                   <th>End</th>
                   <th style="width:50px">Status</th>
-                  <th>Action</th>
+                  <th style="width:140px;">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -114,6 +114,7 @@
     $("#add_data").click(function(){
       $("#FRM_DATA")[0].reset()
       $("[name='foto_lowongan']").val('')
+      $("[name='ket_lowongan']").summernote("code", "")
       save_method = "save"
       $("#modal_add .modal-title").text('Add Data')
       $("#modal_add").modal('show')

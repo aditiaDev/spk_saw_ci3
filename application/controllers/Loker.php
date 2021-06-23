@@ -20,6 +20,7 @@ class Loker extends CI_Controller {
   public function getAllData(){
   	$dataList = $this->db->get('tb_lowongan_kerja')->result();
     $no = 0;
+    $data['data'] = [];
     foreach ($dataList as $list) {
       $row = array();
       $data['data'][$no]['id_lowongan_kerja'] = $list->id_lowongan_kerja;

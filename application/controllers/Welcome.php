@@ -17,7 +17,7 @@ class Welcome extends CI_Controller {
 
 	public function loadRecord($rowno=0){
  
-        $rowperpage = 3;
+        $rowperpage = 5;
  
         if($rowno != 0){
           $rowno = ($rowno-1) * $rowperpage;

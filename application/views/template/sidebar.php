@@ -43,7 +43,10 @@
               </li>
             </ul>
           </li>
-          <?php } ?>
+          <?php 
+          } 
+          if(in_array($this->session->userdata('level'), array("admin", "calon_pelamar"))){
+          ?>
           <li class="nav-item">
             <a href="<?php echo base_url("pelamar")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="PELAMAR"){echo 'active';}?>">
               <i class="nav-icon fas fa-users"></i>
@@ -68,6 +71,10 @@
               </p>
             </a>
           </li>
+          <?php
+          }
+            if($this->session->userdata('level') == "admin"){
+          ?>
           <li class="nav-item">
             <a href="<?php echo base_url("rangking")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="RANGKING"){echo 'active';}?>">
               <i class="nav-icon fas fa-chart-bar"></i>
@@ -76,6 +83,10 @@
               </p>
             </a>
           </li>
+          <?php
+          }
+          if(in_array($this->session->userdata('level'), array("admin", "manager"))){
+          ?>
           <li class="nav-item">
             <a href="<?php echo base_url("laporan")?>" class="nav-link <?php if(strtoupper($this->uri->segment(1))=="LAPORAN"){echo 'active';}?>">
               <i class="nav-icon fas fa-print"></i>
@@ -84,6 +95,9 @@
               </p>
             </a>
           </li>
+          <?php
+          }
+          ?>
           <li class="nav-item">
             <a href="<?php echo base_url("login/logout")?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
